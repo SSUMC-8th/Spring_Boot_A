@@ -10,9 +10,7 @@ import umc.spring.domain.mapping.MemberAgree;
 import umc.spring.domain.mapping.MemberMission;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Getter
@@ -28,7 +26,7 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private SocialType socialType;
 
-    @Column(nullable = false, length = 50)
+    @Column(unique = true, nullable = false, length = 50)
     private String email;
 
     @Column(nullable = false, length = 20)
@@ -66,12 +64,19 @@ public class Member extends BaseEntity {
 
     private LocalDate inactiveDate;
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @Builder.Default
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberAgree> memberAgreeList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @Builder.Default
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviewList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    @Builder.Default
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberMission> memberMissionList = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<FavoredFood> favoredFoods = new HashSet<>();
 }

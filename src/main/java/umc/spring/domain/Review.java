@@ -32,10 +32,12 @@ public class Review extends BaseEntity {
     @Column(length = 256)
     private String content;
 
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
+    @Builder.Default
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReviewImage> reviewImageList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
+    @Builder.Default
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReviewComment> reviewCommentList = new ArrayList<>();
 }
 

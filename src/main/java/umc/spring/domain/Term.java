@@ -29,6 +29,7 @@ public class Term extends BaseEntity {
     @Column(nullable = false)
     private Boolean required = true;
 
-    @OneToMany(mappedBy = "term")
+    @Builder.Default
+    @OneToMany(mappedBy = "term", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MemberAgree> memberAgreeList = new ArrayList<>();
 }

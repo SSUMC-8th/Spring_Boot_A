@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Store extends BaseEntity {
 
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,6 +28,7 @@ public class Store extends BaseEntity {
     private String name;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private FoodKind storeType;
 
     private Float rate;
@@ -37,12 +39,15 @@ public class Store extends BaseEntity {
     @Column(nullable = false, length = 256)
     private String detailAddress;
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    @Builder.Default
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<StoreImage> storeImageList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    @Builder.Default
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviewList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
+    @Builder.Default
+    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Mission> missionList = new ArrayList<>();
 }

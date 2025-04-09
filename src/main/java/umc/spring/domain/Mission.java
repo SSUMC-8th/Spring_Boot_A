@@ -24,8 +24,8 @@ public class Mission extends BaseEntity {
     @JoinColumn(name = "store_id")
     private Store store;
 
-    @Column(nullable = false, length = 50)
-    private String condition;
+    @Column(name = "mission_condition", nullable = false, length = 50)
+    private String missionCondition;
 
     @Column(nullable = false)
     private Integer point;
@@ -33,6 +33,7 @@ public class Mission extends BaseEntity {
     @Column(nullable = false)
     private LocalDateTime dueDate;
 
+    @Builder.Default
     @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL)
     private List<MemberMission> memberMissionList = new ArrayList<>();
 }
