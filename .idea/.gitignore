@@ -1,11 +1,52 @@
-# Default ignored files
-/shelf/
-/workspace.xml
-# Editor-based HTTP Client requests
+# =========================
+# OS 관련
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# IntelliJ 관련
+# =========================
+.idea/
+*.iml
+*.iws
+
+# =========================
+# 빌드 파일 관련
+# =========================
+/build/
+/out/
+
+# =========================
+# Gradle 관련
+# =========================
+.gradle/
+/**/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# =========================
+# 로그파일
+# =========================
+*.log
+
+# =========================
+# HTTP 요청
+# =========================
 /httpRequests/
-# Datasource local storage ignored files
+
+# =========================
+# DataSource 관련
+# =========================
 /dataSources/
 /dataSources.local.xml
 
-# .gitignore 파일에 아래 추가
+# =========================
+# Application 설정
+# =========================
 src/main/resources/application.yml
+
+# =========================
+# 기타
+# =========================
+/shelf/
+/workspace.xml
