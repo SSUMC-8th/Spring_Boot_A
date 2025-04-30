@@ -1,0 +1,34 @@
+# OS 관련
+.DS_Store
+Thumbs.db
+
+# IntelliJ 관련
+.idea/
+*.iml
+*.iws
+
+# 빌드 파일
+/build/
+/out/
+
+# Gradle 관련
+.gradle/
+/**/build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# 로그파일
+*.log
+
+# HTTP 요청
+/httpRequests/
+
+# DataSource 관련
+/dataSources/
+/dataSources.local.xml
+
+# Application 설정
+src/main/resources/application.yml
+
+# 기타
+/shelf/
+/workspace.xml
