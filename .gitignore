@@ -35,3 +35,11 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# === 디렉토리 구조 컨벤션 ===
+.gitignore
+build.gradle
+settings.gradle
+gradlew
+gradlew.bat
+gradle/wrapper/
