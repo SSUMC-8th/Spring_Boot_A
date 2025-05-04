@@ -3,8 +3,11 @@ package umc.spring.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import umc.spring.domain.common.BaseEntity;
+import umc.spring.domain.mapping.MemberMission;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -18,7 +21,7 @@ public class Mission extends BaseEntity {
     private Long id;
 
     @JoinColumn(name="market_id")
-    @OneToOne(fetch = FetchType.LAZY) // 한 가게에서 하나의 미션만 있다고 가정했으므로
+    @ManyToOne(fetch = FetchType.LAZY) // 한 가게에서 하나의 미션만 있다고 가정했으므로
     private Market market;
 
     @Column(nullable = false)
@@ -27,11 +30,11 @@ public class Mission extends BaseEntity {
     @Column(nullable = false)
     private Long point ;
 
-    @Lob
+    @Column(nullable = false)
     private String content;
 
-    // 음... mission이 삭제될일이 없을것 같은데.. 굳이 memberMission으로
-    // 연결을 해줘야 하나?
+    @OneToMany(mappedBy= "mission", cascade = CascadeType.ALL)
+    private List<MemberMission> memberMissionList = new ArrayList<>();
 
 
 }

@@ -22,7 +22,7 @@ public class Term extends BaseEntity {
     @Column(nullable = false, length =30)
     private String title;
 
-    @Lob
+    @Column(length = 512, nullable = false)
     private String content ;
 
     // 해당 약관이 필수인지 : 필수면 1 , 필수 아니면 0

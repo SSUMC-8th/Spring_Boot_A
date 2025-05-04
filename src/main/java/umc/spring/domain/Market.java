@@ -24,7 +24,7 @@ public class Market extends BaseEntity {
     @Column(nullable = false, length = 20)
     private String code;
 
-    @JoinColumn(name = "region_id")
+    @JoinColumn(name = "region_id", nullable = false )
     @ManyToOne(fetch = FetchType.LAZY)
     private Region region;
 
@@ -35,9 +35,12 @@ public class Market extends BaseEntity {
     @OneToMany(mappedBy = "market", cascade = CascadeType.ALL) // market이 지워질때 그에 대한 리뷰도 같이 삭제되는게 맞으므로
     private List<Review> ReviewList = new ArrayList<>();
 
-// 이게 필요가 있나 싶어 일단 지움
-//    @OneToMany(mappedBy = "market", cascade = CascadeType.ALL) // 미션도 마찬가지
-//    private List<Mission> MissionList = new ArrayList<>();
+    // 이게 필요가 있나 싶어 일단 지움
+    @OneToMany(mappedBy = "market", cascade = CascadeType.ALL) // 미션도 마찬가지
+    private List<Mission> missionList = new ArrayList<>();
+
+    @OneToOne(mappedBy = "market", cascade = CascadeType.ALL)
+    private OpenTime openTime;
 
 
 }

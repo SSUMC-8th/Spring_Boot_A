@@ -27,8 +27,8 @@ public class OpenTime extends BaseEntity {
     @Column(nullable = false)
     private LocalTime closeTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="market_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name= "market_id", nullable = false)
     private Market market;
 
 }
