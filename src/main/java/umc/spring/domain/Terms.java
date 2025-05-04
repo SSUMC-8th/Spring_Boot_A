@@ -22,6 +22,7 @@ public class Terms extends BaseEntity {
 
         private String content;
 
+        @Column(nullable = false)
         private Boolean optional;
 
         @OneToMany(mappedBy = "terms", cascade = CascadeType.ALL)
