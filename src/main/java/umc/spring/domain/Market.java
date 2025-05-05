@@ -24,6 +24,10 @@ public class Market extends BaseEntity {
     @Column(nullable = false, length = 20)
     private String code;
 
+    private Float score;
+
+    private String address;
+
     @JoinColumn(name = "region_id", nullable = false )
     @ManyToOne(fetch = FetchType.LAZY)
     private Region region;
@@ -41,6 +45,12 @@ public class Market extends BaseEntity {
 
     @OneToOne(mappedBy = "market", cascade = CascadeType.ALL)
     private OpenTime openTime;
+
+    @Override
+    public String toString() {
+        return "Market [id= " + id + ", name= " + name + ", address= "+address+ ", score= " + score
+                +", region= "+(region != null? region.getName(): "N/A")+"]";
+    }
 
 
 }
