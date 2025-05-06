@@ -29,7 +29,7 @@ public class QMission extends EntityPathBase<Mission> {
 
     public final DatePath<java.time.LocalDate> deadline = createDate("deadline", java.time.LocalDate.class);
 
-    public final StringPath decription = createString("decription");
+    public final StringPath description = createString("description");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
