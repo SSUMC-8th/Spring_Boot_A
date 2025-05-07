@@ -21,6 +21,11 @@ public class Store extends BaseEntity {
         @Column(nullable = false, length = 20)
         private String name;
 
+        private Float score;
+
+        @Column(nullable = false, length = 40)
+        private String address;
+
         @Enumerated(EnumType.STRING)
         @Column(columnDefinition = "VARCHAR(10)")
         private Category category;
@@ -35,4 +40,14 @@ public class Store extends BaseEntity {
         @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
         private List<Review> reviewList = new ArrayList<>();
 
-    }
+        @Override
+        public String toString() {
+                return "Store{" +
+                        "id=" + id +
+                        ", name='" + name + '\'' +
+                        ", address='" + address + '\'' +
+                        ", score=" + score +
+                        ", region=" + (region != null ? region.getName() : "N/A") + // region의 이름 출력
+                        '}';
+        }
+}

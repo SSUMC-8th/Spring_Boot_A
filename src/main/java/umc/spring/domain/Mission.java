@@ -19,7 +19,7 @@ public class Mission extends BaseEntity {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
-        private String decription;
+        private String description;
 
         private Integer reward;
 
