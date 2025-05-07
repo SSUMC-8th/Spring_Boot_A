@@ -26,6 +26,6 @@ public class FavoredFood extends BaseEntity {
 
     @EqualsAndHashCode.Include
     @Enumerated(EnumType.STRING)
-    @Column(length = 30, nullable = false)
+    @Column(name = "food_kind", length = 30, nullable = false)
     private FoodKind foodKind;
 }
