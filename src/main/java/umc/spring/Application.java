@@ -16,21 +16,21 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 
-	@Bean
-	public CommandLineRunner commandLineRunner(ApplicationContext context) {
-		return args -> {
-			MarketQueryService marketService = context.getBean(MarketQueryService.class);
-
-			String name ="요아정";
-			Float score = 4.0f;
-
-			System.out.println("Executing findMarketsByNameAndScore with parameters:");
-			System.out.println("Name: " + name);
-			System.out.println("Score: " + score);
-
-			marketService.findMarketByNameAndScore(name, score)
-					.forEach(System.out::println);
-		};
-	}
+//	@Bean
+//	public CommandLineRunner commandLineRunner(ApplicationContext context) {
+//		return args -> {
+//			MarketQueryService marketService = context.getBean(MarketQueryService.class);
+//
+//			String name ="요아정";
+//			Float score = 4.0f;
+//
+//			System.out.println("Executing findMarketsByNameAndScore with parameters:");
+//			System.out.println("Name: " + name);
+//			System.out.println("Score: " + score);
+//
+//			marketService.findMarketByNameAndScore(name, score)
+//					.forEach(System.out::println);
+//		};
+//	}
 
 }
