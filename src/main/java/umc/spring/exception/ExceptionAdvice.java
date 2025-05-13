@@ -1,15 +1,15 @@
 package umc.spring.exception;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -18,6 +18,8 @@ import umc.spring.apiPayLoad.code.ErrorReasonDTO;
 import umc.spring.apiPayLoad.code.status.ErrorStatus;
 import jakarta.validation.ConstraintViolationException;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -52,12 +54,12 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
         return handleExceptionInternalArgs(e,HttpHeaders.EMPTY,ErrorStatus.valueOf("_BAD_REQUEST"),request,errors);
     }
 
-    @ExceptionHandler
-    public ResponseEntity<Object> exception(Exception e, WebRequest request) {
-        e.printStackTrace();
-
-        return handleExceptionInternalFalse(e, ErrorStatus._INTERNAL_SERVER_ERROR, HttpHeaders.EMPTY, ErrorStatus._INTERNAL_SERVER_ERROR.getHttpStatus(),request, e.getMessage());
-    }
+//    @ExceptionHandler
+//    public ResponseEntity<Object> exception(Exception e, WebRequest request) {
+//        e.printStackTrace();
+//
+//        return handleExceptionInternalFalse(e, ErrorStatus._INTERNAL_SERVER_ERROR, HttpHeaders.EMPTY, ErrorStatus._INTERNAL_SERVER_ERROR.getHttpStatus(),request, e.getMessage());
+//    }
 
     @ExceptionHandler(value = GeneralException.class)
     public ResponseEntity onThrowException(GeneralException generalException, HttpServletRequest request) {
@@ -115,5 +117,55 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
                 errorCommonStatus.getHttpStatus(),
                 request
         );
+    }
+
+    @Value("${webhook.discord.url}")
+    private String discordWebhookUrl;
+
+    @Value("${spring.profiles.active:}")
+    private String activeProfile;
+
+    private final RestTemplate restTemplate = new RestTemplate();
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleServerError(Exception ex, HttpServletRequest request) {
+        System.out.println("🔍 handleServerError 실행됨");
+        log.error("500 에러 발생", ex);
+        // 프로파일 조건 체크: 우선 로컬일때만 동작
+        if ("local".equals(activeProfile)) {
+            sendErrorToDiscord(ex, request);
+        }
+
+        return new ResponseEntity<>("서버 내부 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    private void sendErrorToDiscord(Exception ex, HttpServletRequest request) {
+        String content = """
+            **🚨 500 Internal Server Error 감지됨**
+            - URL: `%s`
+            - Exception: `%s`
+            - Time: `%s`
+            - Profile: `%s`
+            """.formatted(
+                request.getRequestURI(),
+                ex.toString(),
+                LocalDateTime.now(),
+                activeProfile
+        );
+
+        Map<String, String> payload = new HashMap<>();
+        payload.put("content", content);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<Map<String, String>> entity = new HttpEntity<>(payload, headers);
+
+        try {
+            restTemplate.postForEntity(discordWebhookUrl, entity, String.class);
+        } catch (Exception e) {
+            // 전송 실패시 로깅만 수행
+            System.err.println("디스코드 전송 실패: " + e.getMessage());
+        }
     }
 }
