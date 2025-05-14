@@ -1,4 +1,4 @@
-package umc.spring.repository.StoreRepository;
+package umc.spring.repository;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
