@@ -1,4 +1,4 @@
-package umc.spring.service;
+package umc.spring.service.marektService;
 
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class MarketQueryServiceImpl implements MarketQueryService{
+public class MarketQueryServiceImpl implements MarketQueryService {
     private final MarketRepository marketRepository;
 
     @Override
