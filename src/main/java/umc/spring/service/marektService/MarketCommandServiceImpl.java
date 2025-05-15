@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import umc.spring.converter.MarketConverter;
 import umc.spring.domain.Market;
 import umc.spring.repository.MarketRepository;
 import umc.spring.service.marektService.dto.MarketRequestDTO;

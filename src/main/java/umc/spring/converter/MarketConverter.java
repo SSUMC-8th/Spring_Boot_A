@@ -1,6 +1,5 @@
-package umc.spring.service.marektService;
+package umc.spring.converter;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import umc.spring.apiPayload.exception.NotFoundException;
@@ -8,13 +7,9 @@ import umc.spring.domain.FoodCategory;
 import umc.spring.domain.Market;
 import umc.spring.domain.Region;
 import umc.spring.repository.FoodCategoryRepository;
-import umc.spring.repository.MarketRepository;
 import umc.spring.repository.RegionRepository;
 import umc.spring.service.marektService.dto.MarketRequestDTO;
 import umc.spring.service.marektService.dto.MarketResponseDTO;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
