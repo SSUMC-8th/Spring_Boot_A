@@ -2,6 +2,7 @@ package umc.spring.service.marektService.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
+import umc.spring.validator.annotation.ExistingCategory;
 
 public class MarketRequestDTO {
 
@@ -17,6 +18,7 @@ public class MarketRequestDTO {
 
         String detailAddress; // 얘는 그냥 세부주소이고
 
+        @ExistingCategory
         @NotBlank(message = "정수로 입력해주세요 / 필수 값입니다.")
         Long category_id; // 어차피 카테고리 몇개 안되니까 프론트에서 처리해준다고 가정
     }

@@ -22,7 +22,7 @@ public class MemberMission extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
-    private Progress progress;
+    private Progress progress = Progress.NONE;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_id")

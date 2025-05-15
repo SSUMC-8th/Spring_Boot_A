@@ -1,5 +1,5 @@
 package umc.spring.domain.enums;
 
 public enum Progress {
-    IN_PROGRESS, FINISHED
+    IN_PROGRESS, FINISHED, NONE
 }
