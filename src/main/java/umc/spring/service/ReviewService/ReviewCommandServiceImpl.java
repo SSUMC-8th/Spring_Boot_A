@@ -30,7 +30,7 @@ public class ReviewCommandServiceImpl implements ReviewCommandService {
 
         // Store 조회
         Store store = storeRepository.findById(request.getStoreId())
-                .orElseThrow(() -> new StoreHandler(ErrorStatus.MEMBER_NOT_FOUND));
+                .orElseThrow(() -> new StoreHandler(ErrorStatus.STORE_NOT_FOUND));
 
         // Member는 하드코딩 (DB에 존재하는 아무 멤버)
         Member member = memberRepository.findAll().stream().findFirst()
@@ -38,6 +38,7 @@ public class ReviewCommandServiceImpl implements ReviewCommandService {
 
         // Review 생성
         Review review = ReviewConverter.toReview(request, store, member);
+
 
         return reviewRepository.save(review);
     }
