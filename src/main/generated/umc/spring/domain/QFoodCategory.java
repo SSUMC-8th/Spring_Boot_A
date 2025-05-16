@@ -10,14 +10,14 @@ import com.querydsl.core.types.Path;
 
 
 /**
- * QFood is a Querydsl query type for Food
+ * QFoodCategory is a Querydsl query type for FoodCategory
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QFood extends EntityPathBase<Food> {
+public class QFoodCategory extends EntityPathBase<FoodCategory> {
 
-    private static final long serialVersionUID = -1348495606L;
+    private static final long serialVersionUID = -811463128L;
 
-    public static final QFood food = new QFood("food");
+    public static final QFoodCategory foodCategory = new QFoodCategory("foodCategory");
 
     public final umc.spring.domain.common.QBaseEntity _super = new umc.spring.domain.common.QBaseEntity(this);
 
@@ -31,16 +31,16 @@ public class QFood extends EntityPathBase<Food> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
-    public QFood(String variable) {
-        super(Food.class, forVariable(variable));
+    public QFoodCategory(String variable) {
+        super(FoodCategory.class, forVariable(variable));
     }
 
-    public QFood(Path<? extends Food> path) {
+    public QFoodCategory(Path<? extends FoodCategory> path) {
         super(path.getType(), path.getMetadata());
     }
 
-    public QFood(PathMetadata metadata) {
-        super(Food.class, metadata);
+    public QFoodCategory(PathMetadata metadata) {
+        super(FoodCategory.class, metadata);
     }
 
 }

@@ -9,7 +9,7 @@ import umc.spring.domain.common.BaseEntity;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Food extends BaseEntity {
+public class FoodCategory extends BaseEntity {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
@@ -17,4 +17,4 @@ public class Food extends BaseEntity {
         @Column(nullable = false, length = 20)
         private String name;
 
-    }
+}
