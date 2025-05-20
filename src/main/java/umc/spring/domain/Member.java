@@ -2,6 +2,9 @@ package umc.spring.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import umc.spring.domain.common.BaseEntity;
 import umc.spring.domain.enums.Gender;
 import umc.spring.domain.enums.MemberStatus;
@@ -13,6 +16,8 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Entity
+@DynamicUpdate
+@DynamicInsert
 @Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -38,12 +43,13 @@ public class Member extends BaseEntity {
     private Gender gender;
 
     @Column(nullable = false)
-    private Date birthDate;
+    private LocalDate birthDate;
 
     private String address;
 
     private String detailAddress;
 
+    @ColumnDefault("0")
     private Integer point;
 
     private String refreshToken;
