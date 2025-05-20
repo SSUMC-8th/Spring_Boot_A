@@ -2,6 +2,7 @@ package umc.spring.web.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import umc.spring.validation.annotation.ChallengedMission;
 
 public class MissionRequestDTO {
 
@@ -16,5 +17,11 @@ public class MissionRequestDTO {
         @NotNull
         private Long storeId;
 
+
+        @ChallengedMission  // 커스텀 어노테이션 추가
+        public ChallengeMissionDTO getSelf() {
+            return this;
+
+        }
     }
 }

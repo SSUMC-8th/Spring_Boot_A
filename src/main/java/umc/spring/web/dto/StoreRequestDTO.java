@@ -3,6 +3,7 @@ package umc.spring.web.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import umc.spring.validation.annotation.ExistStores;
 
 public class StoreRequestDTO {
     @Getter
@@ -24,5 +25,8 @@ public class StoreRequestDTO {
 
         private Float rate;            // 그냥 추가적인거?
 
+        @NotNull
+        @ExistStores  // 존재하는 storeId인지 검증하기 위한 어노테이션 추가
+        private Long storeId;
     }
 }
