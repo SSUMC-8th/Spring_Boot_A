@@ -2,15 +2,17 @@ package umc.spring.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import umc.spring.domain.common.BaseEntity;
-import umc.spring.domain.enums.Category;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @Builder
+@DynamicUpdate
+@DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Store extends BaseEntity {
@@ -26,10 +28,6 @@ public class Store extends BaseEntity {
         @Column(nullable = false, length = 40)
         private String address;
 
-        @Enumerated(EnumType.STRING)
-        @Column(columnDefinition = "VARCHAR(10)")
-        private Category category;
-
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "region_id")
         private Region region;
@@ -40,14 +38,4 @@ public class Store extends BaseEntity {
         @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
         private List<Review> reviewList = new ArrayList<>();
 
-        @Override
-        public String toString() {
-                return "Store{" +
-                        "id=" + id +
-                        ", name='" + name + '\'' +
-                        ", address='" + address + '\'' +
-                        ", score=" + score +
-                        ", region=" + (region != null ? region.getName() : "N/A") + // region의 이름 출력
-                        '}';
-        }
 }

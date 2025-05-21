@@ -2,6 +2,8 @@ package umc.spring.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import umc.spring.domain.common.BaseEntity;
 
 import java.time.LocalDate;
@@ -9,6 +11,8 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Builder
+@DynamicUpdate
+@DynamicInsert
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Review extends BaseEntity {
@@ -27,5 +31,19 @@ public class Review extends BaseEntity {
         private Integer score;
 
         private String content;
+
+        public void setMember(Member member){
+                if(this.member != null)
+                        member.getReviewList().remove(this);
+                this.member = member;
+                member.getReviewList().add(this);
+        }
+
+        public void setStore(Store store){
+                if (this.score != null)
+                        store.getReviewList().remove(this);
+                this.store = store;
+                store.getReviewList().add(this);
+        }
 
     }

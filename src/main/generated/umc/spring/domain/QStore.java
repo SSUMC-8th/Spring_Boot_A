@@ -26,8 +26,6 @@ public class QStore extends EntityPathBase<Store> {
 
     public final StringPath address = createString("address");
 
-    public final EnumPath<umc.spring.domain.enums.Category> category = createEnum("category", umc.spring.domain.enums.Category.class);
-
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
