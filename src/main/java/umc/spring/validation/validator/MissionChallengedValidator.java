@@ -3,6 +3,7 @@ package umc.spring.validation.validator;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.stereotype.Component;
+import umc.spring.apiPayload.code.status.ErrorStatus;
 import umc.spring.repository.MissionChallengeRepository;
 import umc.spring.validation.annotation.ChallengedMissions;
 import umc.spring.web.dto.MissionDTO.ChallengeRequestDTO;
@@ -20,11 +21,15 @@ public class MissionChallengedValidator
 
     @Override
     public boolean isValid(ChallengeRequestDTO dto, ConstraintValidatorContext ctx) {
-        if (dto.getMemberId() == null || dto.getMissionId() == null) {
-            return true;
-        }
-        boolean already = challengeRepo
+        Boolean isNull = (dto.getMemberId() == null || dto.getMissionId() == null);
+        Boolean isValid = !challengeRepo
                 .existsByMemberIdAndMissionId(dto.getMemberId(), dto.getMissionId());
-        return !already;
+        if (!isNull || !isValid) {
+            ctx.disableDefaultConstraintViolation();
+            ctx.buildConstraintViolationWithTemplate(ErrorStatus._CONFLICT.toString()).addConstraintViolation();
+
+            return false;
+        }
+        return true;
     }
 }
