@@ -8,7 +8,7 @@ import umc.spring.domain.QStore;
 import umc.spring.domain.Store;
 
 import java.util.List;
-
+//6주차
 @Repository
 @RequiredArgsConstructor
 public class StoreRepositoryImpl implements StoreRepositoryCustom{

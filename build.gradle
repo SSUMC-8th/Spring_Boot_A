@@ -71,10 +71,16 @@ dependencies {
 	implementation 'org.antlr:antlr4-runtime:4.10'
 
 	// openapi
-	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
-	implementation 'org.springdoc:springdoc-openapi-data-rest:1.6.9'
+//	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
+//	implementation 'org.springdoc:springdoc-openapi-data-rest:1.6.9'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	//스웨거 세팅
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+
+	//valid
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
 
