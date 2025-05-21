@@ -45,7 +45,7 @@ public class QMarket extends EntityPathBase<Market> {
 
     public final ListPath<Review, QReview> ReviewList = this.<Review, QReview>createList("ReviewList", Review.class, QReview.class, PathInits.DIRECT2);
 
-    public final NumberPath<Float> score = createNumber("score", Float.class);
+    public final NumberPath<Double> score = createNumber("score", Double.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;

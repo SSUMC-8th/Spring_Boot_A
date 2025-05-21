@@ -22,9 +22,11 @@ public class Market extends BaseEntity {
     private String name;
 
     @Column(nullable = false, length = 20)
+    @Setter
     private String code;
 
-    private Float score;
+
+    private double score=0.0;
 
     private String address;
 
