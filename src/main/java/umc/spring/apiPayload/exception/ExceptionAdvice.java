@@ -100,6 +100,17 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
         );
     }
 
+    //존재하지않는 가게
+    @ExceptionHandler(GeneralException.class)
+    public ResponseEntity<Object> onThrowGeneralException(GeneralException e, WebRequest request) {
+        return handleExceptionInternal(
+                e,
+                e.getErrorReason(),  // ✅ ErrorReasonDTO
+                HttpHeaders.EMPTY,
+                ((ServletWebRequest) request).getRequest()
+        );
+    }
+
 
 
     private ResponseEntity<Object> handleExceptionInternalConstraint(Exception e, ErrorStatus errorCommonStatus
