@@ -61,7 +61,6 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
     }
 
 
-
     private ResponseEntity<Object> handleExceptionInternal(Exception e, ErrorReasonDTO reason,
                                                            HttpHeaders headers, HttpServletRequest request) {
 
