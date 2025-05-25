@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class ExistingCategoryValidator implements ConstraintValidator<ExistingCategory, List<Long>> {
+public class ExistingCategoryValidator implements ConstraintValidator<ExistingCategory, Long> {
 
     private final FoodCategoryRepository foodCategoryRepository;
 
@@ -22,16 +22,16 @@ public class ExistingCategoryValidator implements ConstraintValidator<ExistingCa
     }
 
     @Override
-    public boolean isValid(List<Long> values, ConstraintValidatorContext context) {
-        boolean isValid = values.stream()
-                .allMatch(value -> foodCategoryRepository.existsById(value));
+    public boolean isValid(Long value, ConstraintValidatorContext context) {
+        if (value == null) return false; // or true depending on null policy
 
-        if (!isValid) {
+        boolean exists = foodCategoryRepository.existsById(value);
+        if (!exists) {
             context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate(ErrorStatus.FOODCATEGORY_NOT_FOUND.getCode()).addConstraintViolation();
+            context.buildConstraintViolationWithTemplate(ErrorStatus.FOODCATEGORY_NOT_FOUND.getCode())
+                    .addConstraintViolation();
         }
-
-        return isValid;
+        return exists;
 
     }
 }

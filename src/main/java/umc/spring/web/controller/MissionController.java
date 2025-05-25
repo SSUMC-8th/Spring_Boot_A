@@ -23,7 +23,7 @@ public class MissionController {
     private final MissionCommandService missionCommandService;
 
     @PostMapping("/progress")
-    public ApiResponse<MissionResponseDTO.challengeResponse> registerMarket(@RequestBody @Valid MissionRequestDTO.challengeMission dto){
+    public ApiResponse<MissionResponseDTO.challengeResponse> challengeMission(@RequestBody @Valid MissionRequestDTO.challengeMission dto){
         MissionResponseDTO.challengeResponse response = missionCommandService.challengeMission(dto);
 
         return ApiResponse.onSuccess(response);
