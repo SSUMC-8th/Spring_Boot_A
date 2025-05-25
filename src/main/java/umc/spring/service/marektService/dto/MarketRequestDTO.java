@@ -2,7 +2,7 @@ package umc.spring.service.marektService.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
-import umc.spring.validator.annotation.ExistingCategory;
+import umc.spring.validation.annotation.ExistingCategory;
 
 public class MarketRequestDTO {
 

@@ -1,7 +1,7 @@
 package umc.spring.service.missionService.dto;
 
 import lombok.Getter;
-import umc.spring.validator.annotation.ExistMarket;
+import umc.spring.validation.annotation.ExistMarket;
 
 public class MissionRequestDTO {
 

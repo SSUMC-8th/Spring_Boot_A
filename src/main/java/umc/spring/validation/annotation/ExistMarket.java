@@ -1,9 +1,9 @@
-package umc.spring.validator.annotation;
+package umc.spring.validation.annotation;
 
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import umc.spring.validator.MarketExistValidator;
+import umc.spring.validation.validator.MarketExistValidator;
 
 import java.lang.annotation.*;
 
