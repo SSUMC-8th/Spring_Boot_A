@@ -6,6 +6,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import umc.spring.domain.Mission;
 import umc.spring.domain.Review;
+import umc.spring.domain.mapping.MemberMission;
+import umc.spring.repository.MemberMissionRepository;
 import umc.spring.repository.MissionRepository;
 
 @Service
@@ -13,6 +15,7 @@ import umc.spring.repository.MissionRepository;
 public class MissionQueryServiceImpl implements MissionQueryService {
 
     private final MissionRepository missionRepository;
+    private final MemberMissionRepository memberMissionRepository;
 
     @Override
     public Page<Mission> getMarketMissionList(Long marketId, Integer page) {
