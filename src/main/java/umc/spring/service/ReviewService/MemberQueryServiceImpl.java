@@ -8,6 +8,9 @@ import umc.spring.apiPayload.code.status.ErrorStatus;
 import umc.spring.apiPayload.exception.GeneralException;
 import umc.spring.domain.Member;
 import umc.spring.domain.Review;
+import umc.spring.domain.enums.MissionStatus;
+import umc.spring.domain.mapping.MemberMission;
+import umc.spring.repository.MemberMissionRepository;
 import umc.spring.repository.MemberRepository;
 import umc.spring.repository.ReviewRepository;
 
@@ -18,6 +21,8 @@ public class MemberQueryServiceImpl implements MemberQueryService {
     private final MemberRepository memberRepository;
     private final ReviewRepository reviewRepository;
 
+    private final MemberMissionRepository memberMissionRepository;
+
     @Override
     public Page<Review> getMyReviews(Long memberId, Integer page) {
         Member member = memberRepository.findById(memberId)
@@ -25,4 +30,16 @@ public class MemberQueryServiceImpl implements MemberQueryService {
 
         return reviewRepository.findAllByMember(member, PageRequest.of(page, 10));
     }
-}
+
+        @Override
+        public Page<MemberMission> getOngoingMissions(Long memberId, int page) {
+            Member member = memberRepository.findById(memberId)
+                    .orElseThrow(() -> new GeneralException(ErrorStatus.MEMBER_NOT_FOUND));
+
+            return memberMissionRepository.findAllByMember_IdAndMissionStatus(
+                    memberId,
+                    MissionStatus.IN_PROGRESS,
+                    PageRequest.of(page, 10)
+            );
+        }
+    }

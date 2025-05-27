@@ -35,4 +35,25 @@ public class MemberResponseDTO {
         private Boolean isFirst;
         private Boolean isLast;
     }
+
+    @Getter
+    @Builder
+    public static class MissionProgressDTO {
+        private Long missionId;
+        private String missionCondition;
+        private Integer point;
+        private LocalDate deadline;
+    }
+
+    @Getter
+    @Builder
+    public static class MissionProgressListDTO {
+        private List<MissionProgressDTO> missionList;
+        private Integer totalPages;
+        private Long totalElements;
+    }
+
+
 }
+
+

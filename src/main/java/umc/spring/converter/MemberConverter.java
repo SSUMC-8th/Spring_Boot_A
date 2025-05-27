@@ -4,6 +4,7 @@ package umc.spring.converter;
 
 import org.springframework.data.domain.Page;
 import umc.spring.domain.Review;
+import umc.spring.domain.mapping.MemberMission;
 import umc.spring.web.dto.MemberResponseDTO;
 
 import java.util.List;
@@ -32,4 +33,20 @@ public class MemberConverter {
                 .isLast(reviewPage.isLast())
                 .build();
     }
-}
+
+
+        public static MemberResponseDTO.MissionProgressListDTO toMissionProgressListDTO(Page<MemberMission> page) {
+            return MemberResponseDTO.MissionProgressListDTO.builder()
+                    .missionList(page.getContent().stream()
+                            .map(m -> MemberResponseDTO.MissionProgressDTO.builder()
+                                    .missionId(m.getMission().getId())
+                                    .missionCondition(m.getMission().getMissionCondition())
+                                    .point(m.getMission().getPoint())
+                                    .deadline(m.getMission().getDueDate().toLocalDate())
+                                    .build())
+                            .toList())
+                    .totalPages(page.getTotalPages())
+                    .totalElements(page.getTotalElements())
+                    .build();
+        }
+    }
