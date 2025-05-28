@@ -1,4 +1,4 @@
-package umc.spring.validator;
+package umc.spring.validation.validator;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -6,13 +6,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import umc.spring.apiPayload.code.status.ErrorStatus;
 import umc.spring.repository.FoodCategoryRepository;
-import umc.spring.validator.annotation.ExistingCategory;
-
-import java.util.List;
+import umc.spring.validation.annotation.ExistingCategory;
 
 @Component
 @RequiredArgsConstructor
-public class ExistingCategoryValidator implements ConstraintValidator<ExistingCategory, List<Long>> {
+public class ExistingCategoryValidator implements ConstraintValidator<ExistingCategory, Long> {
 
     private final FoodCategoryRepository foodCategoryRepository;
 
@@ -22,16 +20,16 @@ public class ExistingCategoryValidator implements ConstraintValidator<ExistingCa
     }
 
     @Override
-    public boolean isValid(List<Long> values, ConstraintValidatorContext context) {
-        boolean isValid = values.stream()
-                .allMatch(value -> foodCategoryRepository.existsById(value));
+    public boolean isValid(Long value, ConstraintValidatorContext context) {
+        if (value == null) return false; // or true depending on null policy
 
-        if (!isValid) {
+        boolean exists = foodCategoryRepository.existsById(value);
+        if (!exists) {
             context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate(ErrorStatus.FOODCATEGORY_NOT_FOUND.getCode()).addConstraintViolation();
+            context.buildConstraintViolationWithTemplate(ErrorStatus.FOODCATEGORY_NOT_FOUND.getCode())
+                    .addConstraintViolation();
         }
-
-        return isValid;
+        return exists;
 
     }
 }

@@ -4,6 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import umc.spring.service.reviewService.dto.ReviewResponseDTO;
+
+import java.time.LocalDate;
+import java.util.List;
 
 public class MarketResponseDTO {
 
@@ -16,4 +20,5 @@ public class MarketResponseDTO {
         private String name ;
         private String code;
     }
+
 }

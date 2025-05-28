@@ -112,4 +112,20 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
         );
     }
 
+    @ExceptionHandler(GeneralException.class)
+    public ResponseEntity<Object> handleGeneralException(GeneralException e, WebRequest request){
+        ErrorReasonDTO reason = e.getErrorReason();
+        ApiResponse<Object> body = ApiResponse.onFailure(reason.getCode(), reason.getMessage(), null);
+
+        return super.handleExceptionInternal(
+                e,
+                body,
+                HttpHeaders.EMPTY,
+                reason.getHttpStatus(),
+                request
+        );
+    }
+
+
 }
+

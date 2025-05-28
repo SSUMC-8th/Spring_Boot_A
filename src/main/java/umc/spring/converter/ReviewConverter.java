@@ -1,6 +1,7 @@
 package umc.spring.converter;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import umc.spring.apiPayload.exception.NotFoundException;
 import umc.spring.domain.Market;
@@ -10,6 +11,9 @@ import umc.spring.repository.MarketRepository;
 import umc.spring.repository.MemberRepository;
 import umc.spring.service.reviewService.dto.ReviewRequestDTO;
 import umc.spring.service.reviewService.dto.ReviewResponseDTO;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Component
@@ -39,6 +43,29 @@ public class ReviewConverter {
         return ReviewResponseDTO.reviewPostResponse.builder()
                 .marketName(review.getMarket().getName())
                 .evaluation(review.getEvalutaion())
+                .build();
+    }
+
+
+    public static ReviewResponseDTO.myReviewDTO toMyReview(Review review){
+        return ReviewResponseDTO.myReviewDTO.builder()
+                .content(review.getContent())
+                .rate(review.getEvalutaion())
+                .createdAt(review.getCreatedAt().toLocalDate())
+                .build();
+    }
+
+    public static ReviewResponseDTO.myReviewListDTO toMyReviewListDTO(Page<Review> reviewList){
+        List<ReviewResponseDTO.myReviewDTO> myReviewDTOList = reviewList.stream()
+                .map(ReviewConverter::toMyReview).collect(Collectors.toList());
+
+        return ReviewResponseDTO.myReviewListDTO.builder()
+                .isLast(reviewList.isLast())
+                .isFirst(reviewList.isFirst())
+                .totalPage(reviewList.getTotalPages())
+                .totalElements(reviewList.getTotalElements())
+                .listSize(myReviewDTOList.size())
+                .reviewList(myReviewDTOList)
                 .build();
     }
 

@@ -20,7 +20,15 @@ public enum ErrorStatus implements BaseErrorCode {
     NICKNAME_NOT_EXIST(HttpStatus.BAD_REQUEST, "MEMBER4002","닉네임이 존재하지 않습니다."),
 
     TEMP_EXCEPTION(HttpStatus.BAD_REQUEST,"TEMP4001", "이것은 테스트"),
-    FOODCATEGORY_NOT_FOUND(HttpStatus.BAD_REQUEST,"CATEGORY4001", "카테고리가 존재하지 않습니다.");
+    FOODCATEGORY_NOT_FOUND(HttpStatus.BAD_REQUEST,"CATEGORY4001", "카테고리가 존재하지 않습니다."),
+    MARKET_NOT_FOUND(HttpStatus.BAD_REQUEST, "MARKET4001","해당 가게가 존재하지 않습니다."),
+
+    PAGE_MISSING(HttpStatus.BAD_REQUEST, "REVIEW4001", "요청 페이지를 입력해주세요."),
+    INVALID_PAGE_RANGE(HttpStatus.BAD_REQUEST, "REVIEW4001", "1이상의 정수를 입력해주세요");
+
+
+
+    ;
 
     private final HttpStatus httpStatus;
     private final String code;
@@ -42,5 +50,14 @@ public enum ErrorStatus implements BaseErrorCode {
                 .code(code)
                 .isSuccess(false)
                 .build();
+    }
+
+    public static ErrorStatus fromCode(String code) {
+        for (ErrorStatus status : values()) {
+            if (status.getCode().equals(code)) {
+                return status;
+            }
+        }
+        return _BAD_REQUEST; // 못 찾았을 때 기본값
     }
 }
