@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExistStores {
 
-    String message() default "존재하지 않는 가게 ID가 포함되어 있습니다.";
+    String message() default "STORE4001";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

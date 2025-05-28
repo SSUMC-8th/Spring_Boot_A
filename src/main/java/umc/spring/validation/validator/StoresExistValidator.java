@@ -22,8 +22,9 @@ public class StoresExistValidator implements ConstraintValidator<ExistStores, Lo
 
         if (!exists) {
             context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate("존재하지 않는 가게 ID입니다.")
-                    .addConstraintViolation();
+            context.buildConstraintViolationWithTemplate(
+                    context.getDefaultConstraintMessageTemplate()
+            ).addConstraintViolation();
         }
 
         return exists;

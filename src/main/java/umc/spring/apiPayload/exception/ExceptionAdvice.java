@@ -30,14 +30,14 @@ import java.util.Optional;
 @RestControllerAdvice(annotations = {RestController.class})
 public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler
-    public ResponseEntity<Object> validation(ConstraintViolationException e, WebRequest request) {
-        String errorMessage = e.getConstraintViolations().stream()
-                .map(constraintViolation -> constraintViolation.getMessage())
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("ConstraintViolationException 추출 도중 에러 발생"));
-        return handleExceptionInternalConstraint(e, ErrorStatus.valueOf(errorMessage), HttpHeaders.EMPTY, request);
-    }
+//    @ExceptionHandler
+//    public ResponseEntity<Object> validation(ConstraintViolationException e, WebRequest request) {
+//        String errorMessage = e.getConstraintViolations().stream()
+//                .map(constraintViolation -> constraintViolation.getMessage())
+//                .findFirst()
+//                .orElseThrow(() -> new RuntimeException("ConstraintViolationException 추출 도중 에러 발생"));
+//        return handleExceptionInternalConstraint(e, ErrorStatus.valueOf(errorMessage), HttpHeaders.EMPTY, request);
+//    }
 
 
     @Override
@@ -59,7 +59,6 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
         e.printStackTrace();
         return handleExceptionInternalFalse(e, ErrorStatus._INTERNAL_SERVER_ERROR, HttpHeaders.EMPTY, ErrorStatus._INTERNAL_SERVER_ERROR.getHttpStatus(), request, e.getMessage());
     }
-
 
 
     private ResponseEntity<Object> handleExceptionInternal(Exception e, ErrorReasonDTO reason,
@@ -101,8 +100,16 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
         );
     }
 
-
-
+    //존재하지않는 가게
+    @ExceptionHandler(GeneralException.class)
+    public ResponseEntity<Object> onThrowGeneralException(GeneralException e, WebRequest request) {
+        return handleExceptionInternal(
+                e,
+                e.getErrorReason(),  // ✅ ErrorReasonDTO
+                HttpHeaders.EMPTY,
+                ((ServletWebRequest) request).getRequest()
+        );
+    }
     private ResponseEntity<Object> handleExceptionInternalConstraint(Exception e, ErrorStatus errorCommonStatus
             , HttpHeaders headers, WebRequest request) {
         ApiResponse<Object> body = ApiResponse.onFailure(errorCommonStatus.getCode(), errorCommonStatus.getMessage(), null);
@@ -113,5 +120,23 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
                 errorCommonStatus.getHttpStatus(),
                 request
         );
+    }
+
+    // ✅ 유효성 검사 예외는 이 하나로 처리
+    @ExceptionHandler
+    public ResponseEntity<Object> validation(ConstraintViolationException e, WebRequest request) {
+        String errorMessage = e.getConstraintViolations().stream()
+                .map(constraintViolation -> constraintViolation.getMessage())
+                .findFirst()
+                .orElse("COMMON400");
+
+        ErrorStatus status;
+        try {
+            status = ErrorStatus.valueOf(errorMessage);
+        } catch (IllegalArgumentException ex) {
+            status = ErrorStatus._BAD_REQUEST;
+        }
+
+        return handleExceptionInternalConstraint(e, status, HttpHeaders.EMPTY, request);
     }
 }
